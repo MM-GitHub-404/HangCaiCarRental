@@ -9,8 +9,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" href="${alfred}/xxxt_car/resources/layui/css/layui.css" media="all"/>
-    <link rel="stylesheet" href="${alfred}/xxxt_car/resources/css/public.css" media="all"/>
+    <link rel="stylesheet" href="/HangCaiCarRental/resources/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="/HangCaiCarRental/resources/css/public.css" media="all"/>
 </head>
 <blockquote class="layui-elem-quote layui-bg-green">
     <div id="nowTime"></div>
@@ -41,7 +41,7 @@
     </div>
 </div>
 
-<script type="text/javascript" src="${alfred}/xxxt_car/resources/layui/layui.js"></script>
+<script type="text/javascript" src="/HangCaiCarRental/resources/layui/layui.js"></script>
 <script>
 
     //获取系统时间
@@ -69,7 +69,7 @@
         var second = dateObj.getSeconds(); //当前系统时间的秒钟值
         var timeValue = "" + ((hour >= 12) ? (hour >= 18) ? "晚上" : "下午" : "上午"); //当前时间属于上午、晚上还是下午
         newDate = dateFilter(year) + "年" + dateFilter(month) + "月" + dateFilter(date) + "日 " + " " + dateFilter(hour) + ":" + dateFilter(minute) + ":" + dateFilter(second);
-        document.getElementById("nowTime").innerHTML = "亲爱的${user.realname}，" + timeValue + "好！ 欢迎使用茂茂汽车租赁系统。当前时间为： " + newDate + "　" + week;
+        document.getElementById("nowTime").innerHTML = "亲爱的${user}，" + timeValue + "好！ 欢迎使用航财汽车租赁管理系统。当前时间为： " + newDate + "　" + week;
         setTimeout("getLangDate()", 1000);
     }
 
@@ -90,7 +90,7 @@
             parent.addTab($(this));
         })
         //最新文章列表
-        $.get("${alfred}/xxxt_car/news/loadAllNews?page=1&limit=10", function (data) {
+        $.get("/HangCaiCarRental/news/loadAllNews?page=1&limit=10", function (data) {
             var hotNewsHtml = '';
             for (var i = 0; i < 5; i++) {
                 hotNewsHtml += '<tr ondblclick="viewNews(' + data.data[i].id + ')">'
@@ -105,7 +105,7 @@
     })
 
     function viewNews(id) {
-        $.get("${alfred}/xxxt_car/news/loadNewsById", {id: id}, function (news) {
+        $.get("/HangCaiCarRental/news/loadNewsById", {id: id}, function (news) {
             layer.open({
                 type: 1,
                 title: '查看公告',
@@ -122,7 +122,7 @@
     }
 
     <%--function viewNews() {--%>
-    <%--    $.get("${alfred}/xxxt_car/mongo/find", function (news) {--%>
+    <%--    $.get("/HangCaiCarRental/mongo/find", function (news) {--%>
     <%--        layer.open({--%>
     <%--            type: 1,--%>
     <%--            title: '查看公告',--%>
@@ -142,7 +142,7 @@
     <%--$("#b_1").click(function () {--%>
     <%--    alert("运行ajax")--%>
     <%--    $.ajax({--%>
-    <%--        url: "${alfred}/xxxt_car/mongo/find",--%>
+    <%--        url: "/HangCaiCarRental/mongo/find",--%>
     <%--        type: "GET",--%>
     <%--        success: function (name) {--%>
     <%--            $("#div_1").text(name);--%>

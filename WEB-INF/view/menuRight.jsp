@@ -12,11 +12,11 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    <link rel="icon" href="../../resources/favicon.ico">
-    <link rel="stylesheet" href="${alfred}/xxxt_car/resources/layui/css/layui.css" media="all"/>
-    <link rel="stylesheet" href="${alfred}/xxxt_car/resources/css/public.css" media="all"/>
-    <link rel="stylesheet" href="${alfred}/xxxt_car/resources/layui_ext/dtree/dtree.css">
-    <link rel="stylesheet" href="${alfred}/xxxt_car/resources/layui_ext/dtree/font/dtreefont.css">
+    <link rel="icon" href="/HangCaiCarRental/resources/favicon.ico">
+    <link rel="stylesheet" href="/HangCaiCarRental/resources/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="/HangCaiCarRental/resources/css/public.css" media="all"/>
+    <link rel="stylesheet" href="/HangCaiCarRental/resources/layui_ext/dtree/dtree.css">
+    <link rel="stylesheet" href="/HangCaiCarRental/resources/layui_ext/dtree/font/dtreefont.css">
 
     <style type="text/css">
         .select-test {
@@ -155,11 +155,11 @@
 </div>
 <!-- 添加和修改的弹出层结束 -->
 
-<script src="${alfred }/xxxt_car/resources/layui/layui.js"></script>
+<script src="/HangCaiCarRental/resources/layui/layui.js"></script>
 <script type="text/javascript">
     var tableIns;
     layui.extend({
-        dtree: '${alfred}/xxxt_car/resources/layui_ext/dist/dtree'
+        dtree: '/HangCaiCarRental/resources/layui_ext/dist/dtree'
     }).use(['jquery', 'layer', 'form', 'table', 'dtree'], function () {
         var $ = layui.jquery;
         var layer = layui.layer;
@@ -169,7 +169,7 @@
         //渲染数据表格
         tableIns = table.render({
             elem: '#menuTable'   //渲染的目标对象
-            , url: '${alfred}/xxxt_car/menu/loadAllMenu' //数据接口
+            , url: '/HangCaiCarRental/menu/loadAllMenu' //数据接口
             , title: '用户数据表'//数据导出来的标题
             , toolbar: "#menuToolBar"   //表格的工具条
             , height: 'full-150'
@@ -204,7 +204,7 @@
         $("#doSearch").click(function () {
             var params = $("#searchFrm").serialize();
             tableIns.reload({
-                url: "${alfred}/xxxt_car/menu/loadAllMenu?" + params
+                url: "/HangCaiCarRental/menu/loadAllMenu?" + params
             })
         });
 
@@ -223,13 +223,13 @@
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             if (layEvent === 'del') { //删除
                 //先判断当前菜单有没有子节点
-                $.post("${alfred}/xxxt_car/menu/checkMenuHasChildren?id=" + data.id, function (obj) {
+                $.post("/HangCaiCarRental/menu/checkMenuHasChildren?id=" + data.id, function (obj) {
                     if (obj.code >= 0) {
                         layer.msg("当前菜单有子节点，请先删除完子节点！");
                     } else {
                         layer.confirm('确定删除【' + data.title + '】这个菜单吗？', function (index) {
                             //向服务端发送删除指令
-                            $.post("${alfred}/xxxt_car/menu/deleteMenu", {id: data.id}, function (res) {
+                            $.post("/HangCaiCarRental/menu/deleteMenu", {id: data.id}, function (res) {
                                 layer.msg(res.msg);
                                 //刷新数据 表格
                                 tableIns.reload();
@@ -262,7 +262,7 @@
                     //清空表单数据
                     $("#dataFrm")[0].reset();
                     $("#menuSelectDiv").removeClass("layui-show");
-                    url = "${alfred}/xxxt_car/menu/addMenu";
+                    url = "/HangCaiCarRental/menu/addMenu";
                 }
             });
         }
@@ -278,7 +278,7 @@
                     form.val("dataFrm", data);
                     //移除打开的样式
                     $("#menuSelectDiv").removeClass("layui-show");
-                    url = "${alfred}/xxxt_car/menu/updateMenu";
+                    url = "/HangCaiCarRental/menu/updateMenu";
                     //反选下拉树
                     var pid = data.pid;
                     var params = dtree.dataInit("menuTree", pid);
@@ -311,7 +311,7 @@
             dataStyle: "layuiStyle",  //使用layui风格的数据格式
             response: {message: "msg", statusCode: 0},  //修改response中返回数据的定义
             dataFormat: "list",  //配置data的风格为list
-            url: "${alfred}/xxxt_car/menu/loadMenuManagerLeftTreeJson?spread=1",  // 使用url加载（可与data加载同时存在）
+            url: "/HangCaiCarRental/menu/loadMenuManagerLeftTreeJson?spread=1",  // 使用url加载（可与data加载同时存在）
             icon: "2",
             accordion: true
         });
@@ -330,7 +330,7 @@
 
     function reloadTable(id) {
         tableIns.reload({
-            url: "${alfred}/xxxt_car/menu/loadAllMenu?id=" + id
+            url: "/HangCaiCarRental/menu/loadAllMenu?id=" + id
         })
     }
 </script>

@@ -11,7 +11,7 @@
     <title>菜单管理</title>
 </head>
     <frameset cols="200,*" border="1">
-        <frame src="${alfred}/xxxt_car/navigation/toMenuLeft" name="left">
-        <frame src="${alfred}/xxxt_car/navigation/toMenuRight" name="right">
+            <frame src="/HangCaiCarRental/navigation/toMenuLeft" name="left">
+        <frame src="/HangCaiCarRental/navigation/toMenuRight" name="right">
     </frameset>
 </html>

@@ -1,5 +1,5 @@
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
     <meta charset="utf-8">
@@ -12,10 +12,10 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
     <%--<link rel="icon" href="favicon.ico">--%>
-    <link rel="stylesheet" href="${alfred}/xxxt_car/resources/layui/css/layui.css" media="all"/>
-    <link rel="stylesheet" href="${alfred}/xxxt_car/resources/css/public.css" media="all"/>
-    <link rel="stylesheet" href="${alfred}/xxxt_car/resources/layui_ext/dtree/dtree.css">
-    <link rel="stylesheet" href="${alfred}/xxxt_car/resources/layui_ext/dtree/font/dtreefont.css">
+    <link rel="stylesheet" href="/HangCaiCarRental/resources/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="/HangCaiCarRental/resources/css/public.css" media="all"/>
+    <link rel="stylesheet" href="/HangCaiCarRental/resources/layui_ext/dtree/dtree.css">
+    <link rel="stylesheet" href="/HangCaiCarRental/resources/layui_ext/dtree/font/dtreefont.css">
 </head>
 <body class="childrenBody">
 
@@ -162,7 +162,7 @@
     </form>
 </div>
 
-<script src="${alfred}/xxxt_car/resources/layui/layui.js"></script>
+<script src="/HangCaiCarRental/resources/layui/layui.js"></script>
 <script type="text/javascript">
     var tableIns;
     layui.use(['jquery', 'layer', 'form', 'table'], function () {
@@ -174,27 +174,29 @@
         //渲染数据表格
         tableIns = table.render({
             elem: '#customerTable'   //渲染的目标对象
-            , url: '${alfred}/xxxt_car/customer/loadAllCustomer' //数据接口
+            , url: '/HangCaiCarRental/customer/loadAllCustomer' //数据接口
             , title: '客户数据表'//数据导出来的标题
             , toolbar: "#customerToolBar"   //表格的工具条
             , height: 'full-210'
-            , cellMinWidth: 100 //设置列的最小默认宽度
+            , cellMinWidth: 50 //设置列的最小默认宽度
             , page: true  //是否启用分页
             , cols: [[   //列表数据
                 {type: 'checkbox', fixed: 'left'}
-                , {field: 'identity', title: '身份证号', align: 'center', width: '200'}
-                , {field: 'custname', title: '客户姓名', align: 'center', width: '125'}
-                , {field: 'address', title: '客户地址', align: 'center', width: '125'}
-                , {field: 'career', title: '客户职业', align: 'center', width: '150'}
-                , {field: 'phone', title: '手机号码', align: 'center', width: '150'}
-
+                , {field: 'customerName', title: '客户姓名', align: 'center', width: '90'}
+                , {field: 'customerIdNumber', title: '身份证号', align: 'center', width: '180'}
                 , {
-                    field: 'sex', title: '性别', align: 'center', width: '120', templet: function (d) {
-                        return d.sex == '1' ? '<font color=blue>男</font>' : '<font color=red>女</font>';
+                    field: 'customerGender', title: '性别', align: 'center', width: '50', templet: function (d) {
+                        return d.customerGender == '男' ? '<font color=blue>男</font>' : '<font color=green>女</font>';
                     }
                 }
-                , {field: 'createtime', title: '录入时间', align: 'center', width: '200'}
-                , {fixed: 'right', title: '操作', toolbar: '#customerBar', align: 'center', width: '150'}
+                , {field: 'customerPhoneNumber', title: '手机号', align: 'center', width: '130'}
+                , {field: 'customerEmailNumber', title: '邮箱', align: 'center', width: '200'}
+                , {field: 'customerOccupation', title: '客户职业', align: 'center', width: '90'}
+                , {field: 'customerResidentCity', title: '常住城市', align: 'center', width: '90'}
+                , {field: 'customerDetailedAddress', title: '常住地址', align: 'center', width: '170'}
+                , {field: 'customerIntegral', title: '积分', align: 'center', width: '90'}
+                , {field: 'customerDateBirth', title: '出生日期', align: 'center', width: '110'}
+                // , {fixed: 'right', title: '操作', toolbar: '#customerBar', align: 'center', width: '150'}
             ]],
             done:function (data, curr, count) {
                 //不是第一页时，如果当前返回的数据为0那么就返回上一页
@@ -212,7 +214,7 @@
         $("#doSearch").click(function () {
             var params = $("#searchFrm").serialize();
             tableIns.reload({
-                url: "${alfred}/xxxt_car/customer/loadAllCustomer?" + params,
+                url: "/HangCaiCarRental/customer/loadAllCustomer?" + params,
                 page: {curr: 1}
             })
         });
@@ -220,7 +222,7 @@
         //导出
         $("#doExport").click(function () {
             var params = $("#searchFrm").serialize();
-            window.location.href="${alfred}/xxxt_car/stat/exportCustomer?"+params;
+            window.location.href="/HangCaiCarRental/stat/exportCustomer?"+params;
         });
 
         //监听头部工具栏事件
@@ -242,7 +244,7 @@
             if (layEvent === 'del') { //删除
                 layer.confirm('真的删除【' + data.custname + '】这个客户么？', function (index) {
                     //向服务端发送删除指令
-                    $.post("${alfred}/xxxt_car/customer/deleteCustomer", {identity: data.identity}, function (res) {
+                    $.post("/HangCaiCarRental/customer/deleteCustomer", {identity: data.identity}, function (res) {
                         layer.msg(res.msg);
                         //刷新数据表格
                         tableIns.reload();
@@ -267,7 +269,7 @@
                 success: function (index) {
                     //清空表单数据
                     $("#dataFrm")[0].reset();
-                    url = "${alfred}/xxxt_car/customer/addCustomer";
+                    url = "/HangCaiCarRental/customer/addCustomer";
                 }
             });
         }
@@ -281,7 +283,7 @@
                 area: ['700px', '320px'],
                 success: function (index) {
                     form.val("dataFrm", data);
-                    url = "${alfred}/xxxt_car/customer/updateCustomer";
+                    url = "/HangCaiCarRental/customer/updateCustomer";
                 }
             });
         }
@@ -315,7 +317,7 @@
             });
             layer.confirm('真的要删除这些客户么？', function (index) {
                 //向服务端发送删除指令
-                $.post("${alfred}/xxxt_car/customer/deleteBatchCustomer", params, function (res) {
+                $.post("/HangCaiCarRental/customer/deleteBatchCustomer", params, function (res) {
                     layer.msg(res.msg);
                     //刷新数据表格
                     tableIns.reload();
