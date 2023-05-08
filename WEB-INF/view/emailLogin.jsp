@@ -1,0 +1,130 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html class="loginHtml">
+<head>
+    <meta charset="utf-8">
+    <title>茂茂</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="/HangCaiCarRental/resources/favicon.ico">
+    <link rel="stylesheet" href="/HangCaiCarRental/resources/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="/HangCaiCarRental/resources/css/public.css" media="all"/>
+</head>
+
+<body class="loginBody">
+
+<form class="layui-form" id="loginFrm" method="post" action="/HangCaiCarRental/login/mailboxLogin">
+
+    <br>
+    <h3 align="center" id="title" style="color:#6e54a6 ; font-size: 36px;text-align:center;">航财汽车租赁管理系统</h3>
+    <br>
+
+
+    <div class="layui-form-item input-item">
+        <label for="loginname">邮箱地址</label>
+        <input type="text" placeholder="请输入邮箱地址" autocomplete="off" name="employeePassword" id="loginname"
+               class="layui-input" lay-verify="required">
+    </div>
+
+
+    <div class="layui-form-item input-item" id="email-Code-item">
+        <label for="email-code">验证码</label>
+        <input type="text" placeholder="请输入验证码" autocomplete="off" name="code" id="email-code" class="layui-input"
+               lay-verify="required">
+    </div>
+
+    <div class="layui-get-captcha">
+        <!-- 验证码获取按钮 -->
+        <input class="layui-get-captcha-btn" id=“get-code” type="button" name="获取验证码" value="点击获取验证码"
+               onclick="settime(this)"/>
+    </div>
+    <div class="layui-form-item">
+        <button class="layui-btn layui-block" lay-filter="login" lay-submit>登录</button>
+    </div>
+
+    <div class="layui-email-more-tips-warp">
+        <span class="layui-more-tips-warp-left"></span>
+        <span class="layui-login-wal1">其他登陆方式</span>
+        <span class="layui-more-tips-warp-right"></span>
+    </div>
+
+    <div>
+        <!-- 或使用按钮实现页面跳转 -->
+        <!-- <button type="button" class="toggle-btn">邮箱登录</button> -->
+        <style>
+            a {
+                text-decoration: none;
+            }
+        </style>
+        <!-- 现在使用<a>标签进行页面跳转 -->
+        <a href="/HangCaiCarRental/navigation/toLogin" class="layui-toggle-btn">工号登录</a>
+    </div>
+    <div class="layui-form-item layui-row" style="text-align: center;color: red;">
+    </div>
+</form>
+<script type="text/javascript" src="/HangCaiCarRental/resources/layui/layui.js"></script>
+<script type="text/javascript" src="/HangCaiCarRental/resources/js/cache.js"></script>
+<script type="text/javascript">
+    layui.use(['form', 'layer', 'jquery'], function () {
+        var form = layui.form,
+            layer = parent.layer === undefined ? layui.layer : top.layer
+        $ = layui.jquery;
+        //登录按钮
+        form.on("submit(login)", function (data) {
+            $(this).text("登录中...").attr("disabled", "disabled").addClass("layui-disabled");
+            setTimeout(function () {
+                $("#loginFrm").submit();
+            }, 1000);
+            return false;
+        })
+
+        //表单输入效果
+        $(".loginBody .input-item").click(function (e) {
+            e.stopPropagation();
+            $(this).addClass("layui-input-focus").find(".layui-input").focus();
+        })
+        $(".loginBody .layui-form-item .layui-input").focus(function () {
+            $(this).parent().addClass("layui-input-focus");
+        })
+        $(".loginBody .layui-form-item .layui-input").blur(function () {
+            $(this).parent().removeClass("layui-input-focus");
+            if ($(this).val() != '') {
+                $(this).parent().addClass("layui-input-active");
+            } else {
+                $(this).parent().removeClass("layui-input-active");
+            }
+        })
+    })
+
+</script>
+<!-- 倒计时js逻辑，随网页刷新而刷新 -->
+<script type="text/javascript">
+    var countdown = 60;
+    var btn = document.getElementById('get-code');
+    btn.disabled = true;
+
+    function settime(obj) {
+        if (countdown == 0) {
+            obj.removeAttribute("disabled");
+            obj.value = "点击获取验证码";
+            countdown = 60;
+            return;
+        } else {
+            obj.setAttribute("disabled", true);
+            obj.value = "重新发送(" + countdown + ")";
+            countdown--;
+        }
+        setTimeout(function () {
+                settime(obj)
+            }
+            , 1000)
+    }
+
+</script>
+</body>
+
+</html>
