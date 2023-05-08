@@ -692,7 +692,7 @@ h2.method {
 
 #imgCode img {
     position: absolute;
-    top: 1px;
+    top: 2px;
     right: 1px;
     cursor: pointer;
 }
