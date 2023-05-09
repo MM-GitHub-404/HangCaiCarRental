@@ -8,14 +8,14 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    <link rel="icon" href="/HangCaiCarRental/resources/favicon.ico">
-    <link rel="stylesheet" href="/HangCaiCarRental/resources/layui/css/layui.css" media="all"/>
-    <link rel="stylesheet" href="/HangCaiCarRental/resources/css/public.css" media="all"/>
+    <link rel="icon" href="../../resources/favicon.ico">
+    <link rel="stylesheet" href="../../resources/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="../../resources/css/public.css" media="all" />
 </head>
 
 <body class="loginBody">
 
-<form class="layui-form" id="loginFrm" method="post" action="/HangCaiCarRental/login/mailboxLogin">
+<form class="layui-email-form" id="loginFrm" method="post" action="/HangCaiCarRental/login/mailboxLogin">
 
     <br>
     <h3 align="center" id="title" style="color:#6e54a6 ; font-size: 36px;text-align:center;">航财汽车租赁管理系统</h3>
@@ -59,8 +59,14 @@
             }
         </style>
         <!-- 现在使用<a>标签进行页面跳转 -->
-        <a href="/HangCaiCarRental/navigation/toLogin" class="layui-toggle-btn">工号登录</a>
+        <a href="D:\githubshare\HangCaiCarRental-1\WEB-INF\view\login - 副本.html" class="layui-toggle-btn">工号登录</a>
     </div>
+
+    <div class="layui-err-msg" style="color: red;">
+        <span class="err-msg">验证码错误！</span>
+    </div>
+
+
     <div class="layui-form-item layui-row" style="text-align: center;color: red;">
     </div>
 </form>

@@ -2043,20 +2043,41 @@ a cite {
     background-color: #604a96;
 }
 
-
+/* 验证码错误样式 */
+.layui-err-msg{
+    display: flex;
+}
+.err-msg{
+    position: absolute;
+    width: 150px;
+    height: 26px;
+    display: flex;
+    right: 50%;
+    left: 33.5%;
+    bottom: 90px;
+    font-size: 15px;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+    text-align: center;
+}
 /* 其他登陆方式及横线渐变 */
 .layui-more-tips-warp {
     position: absolute;
-    bottom:90px
+    width: 360px;
+    height: 20px;
+    bottom:65px
 }
 
 .layui-email-more-tips-warp {
     position: absolute;
-    bottom: 90px
+    width: 360px;
+    height: 20px;
+    bottom: 65px
 }
 .layui-more-tips-warp-left{
     height: 2px;
-    width: 138px;
+    width: 135px;
     display: inline-block;
     background: linear-gradient(to left,
         rgba(216, 218, 217, 1),
@@ -2064,9 +2085,13 @@ a cite {
     border-radius: 5px;
     margin-bottom: 4px;
 }
+.layui-login-wal1{
+    /* width: 60px; */
+    font-size: 15px
+}
 .layui-more-tips-warp-right{
     height: 2px;
-    width: 138px;
+    width: 125px;
     display: inline-block;
     background: linear-gradient(to right,
         rgba(216, 218, 217, 1),
@@ -2092,7 +2117,7 @@ a cite {
     /* 垂直居中对齐 */
     align-items: center;
     right: 150px;
-    top: 83%;
+    bottom: 25px;
     font-size: 15px;
     vertical-align: middle;
 }
