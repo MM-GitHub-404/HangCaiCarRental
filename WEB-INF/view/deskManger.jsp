@@ -15,32 +15,36 @@
 <blockquote class="layui-elem-quote layui-bg-green">
     <div id="nowTime"></div>
 </blockquote>
-<div class="layui-row layui-col-space10">
-    <div class="layui-col-lg6 layui-col-md6">
-        <blockquote class="layui-elem-quote title">最新文章 <i class="layui-icon layui-red">&#xe756;</i></blockquote>
-        <table class="layui-table mag0" lay-skin="line">
-            <colgroup>
-                <col>
-                <col width="110">
-            </colgroup>
-            <tbody class="hot_news"></tbody>
-        </table>
+<form class="layui-form" method="post" id="searchFrm">
+    <div class="layui-inline">
+        <button type="button"
+                class="layui-btn layui-btn-normal layui-icon layui-icon-search layui-btn-radius layui-btn-sm"
+                id="doSearch" style="margin-top: 4px">查询门店未处理通知
+        </button>
+        <button type="button"
+                class="layui-btn layui-btn-warm layui-icon layui-icon-refresh layui-btn-radius layui-btn-sm"
+                style="margin-top: 4px">查询门店已处理通知
+        </button>
     </div>
-</div>
-<!-- 查看公告的div -->
-<div id="desk_viewNewsDiv" style="padding: 10px;">
-    <h2 id="view_title" align="center"></h2>
-    <hr>
-    <div style="text-align: right;">
-        发布人:<span id="view_opername"></span>
-        <span style="display: inline-block;width: 20px"></span>
-        发布时间:<span id="view_createtime"></span>
-    </div>
-    <hr>
-    <div id="view_content">
-    </div>
+</form>
+<table class="layui-hide" id="carTable" lay-filter="carTable"></table>
+<div id="carBar" style="display: none;">
+    <a class="layui-btn layui-btn-warm layui-btn-xs layui-btn-radius" lay-event="viewNews">查看</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="del">已解决</a>
 </div>
 
+<%--查看公告的div--%>
+<div id="viewNewsDiv" style="padding: 10px;display: none">
+    <h2 id="view_title" align="center"></h2>
+    <hr>
+    <div style="text-align: right">
+        <%--        <span id="view_opername"></span>--%>
+        <span style="display: inline-block;width: 20px"></span>
+        通知时间:<span id="view_createtime"></span>
+    </div>
+    <hr>
+    <div id="view_content"></div>
+</div>
 <script type="text/javascript" src="/HangCaiCarRental/resources/layui/layui.js"></script>
 <script>
 
@@ -48,6 +52,7 @@
     var newDate = '';
     getLangDate();
     viewNews(18)
+
     //值小于10时，在前面补0
     function dateFilter(date) {
         if (date < 10) {
@@ -89,66 +94,232 @@
         $(".panel a").click(function () {
             parent.addTab($(this));
         })
-        //最新文章列表
-        $.get("/HangCaiCarRental/news/loadAllNews?page=1&limit=10", function (data) {
-            var hotNewsHtml = '';
-            for (var i = 0; i < 5; i++) {
-                hotNewsHtml += '<tr ondblclick="viewNews(' + data.data[i].id + ')">'
-                    + '<td align="left"><a href="javascript:;"> ' + data.data[i].title + '</a></td>'
-                    + '<td>' + data.data[i].createtime.substring(0, 10) + '</td>'
-                    + '</tr>';
-            }
-            $(".hot_news").html(hotNewsHtml);
-            $(".userAll span").text(data.length);
-        })
-
     })
 
-    function viewNews(id) {
-        $.get("/HangCaiCarRental/news/loadNewsById", {id: id}, function (news) {
-            layer.open({
+</script>
+<script type="text/javascript">
+    var tableIns;
+    layui.use(['jquery', 'layer', 'form', 'table', 'upload'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var form = layui.form;
+        var table = layui.table;
+        var dtree = layui.dtree;
+        var upload = layui.upload;
+        //渲染数据表格
+        tableIns = table.render({
+            elem: '#carTable'   //渲染的目标对象
+            , url: '/HangCaiCarRental/storeNotification/notProcessedStoreNotification' //数据接口
+            , title: '车辆数据表'//数据导出来的标题
+            , toolbar: "#carToolBar"   //表格的工具条
+            , height: 'full-205'
+            , cellMinWidth: 100 //设置列的最小默认宽度
+            , page: true  //是否启用分页
+            , cols: [[   //列表数据
+                // {type: 'checkbox', fixed: 'left'}
+                , {field: 'storeNotificationNumber', title: '通知单号', align: 'center', width: '110'}
+                , {field: 'notificationTime', title: '通知时间', align: 'center', width: '90'}
+                , {field: 'storeInformation', title: '信息', align: 'center', width: '90'}
+                , {
+                    field: 'resolveSituation', title: '解决情况', align: 'center', width: '90', templet: function (d) {
+                        if (d.resolveSituation == '未解决') {
+                            return '<font color=red>未解决</font>';
+                        } else {
+                            return '<font color=green>已解决</font>';
+                        }
+                        // return d.isrenting == '已入库' ? '<font color=blue>已出租</font>' : '<font color=red>未出租</font>';
+                    }
+                }
+
+                , {fixed: 'right', title: '操作', toolbar: '#carBar', align: 'center', width: '190'}
+            ]],
+            done: function (data, curr, count) {
+                //不是第一页时，如果当前返回的数据为0那么就返回上一页
+                if (data.data.length == 0 && curr != 1) {
+                    tableIns.reload({
+                        page: {
+                            curr: curr - 1
+                        }
+                    })
+                }
+            }
+        });
+
+        //模糊查询
+        $("#doSearch").click(function () {
+            var params = $("#searchFrm").serialize();
+//            alert(params);
+            tableIns.reload({
+                url: "/HangCaiCarRental/car/loadConditionAllCar?" + params,
+                page: {curr: 1}
+            })
+        });
+        $("#doEsSearch").click(function () {
+            var params = $("#esSearchFrm").serialize();
+//            alert(params);
+            tableIns.reload({
+                url: "/HangCaiCarRental/car/esFuzzyQuery?" + params,
+                page: {curr: 1}
+            })
+        });
+        //导出
+        $("#doExport").click(function () {
+            var params = $("#searchFrm").serialize();
+            window.location.href = "/HangCaiCarRental/stat/exportCar?" + params;
+        });
+        //监听头部工具栏事件
+        table.on("toolbar(carTable)", function (obj) {
+            switch (obj.event) {
+                case 'add':
+                    openAddCar();
+                    break;
+                case 'deleteBatch':
+                    deleteBatch();
+                    break;
+            }
+        });
+
+        //监听行工具事件
+        table.on('tool(carTable)', function (obj) {
+            var data = obj.data; //获得当前行    数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            if (layEvent === 'del') { //删除
+                layer.confirm('确认已处理完毕： ' + data.storeInformation + ' 这个通知？', function (index) {
+                    //向服务端发送删除指令
+                    $.post("/HangCaiCarRental/storeNotification/updateCompleted", {storeNotificationId: data.storeNotificationId}, function (res) {
+                        layer.msg(res.msg);
+                        //刷新数据表格
+                        tableIns.reload();
+                    })
+                });
+            } else if (layEvent === 'edit') { //编辑
+                //编辑，打开修改界面
+                openUpdateCar(data);
+            } else if (layEvent === 'viewNews') { //查看
+                viewNews(data);
+            }
+        });
+
+        var url;
+        var mainIndex;
+
+        //查看
+        function viewNews(data) {
+            mainIndex = layer.open({
                 type: 1,
                 title: '查看公告',
-                content: $("#desk_viewNewsDiv"),
-                area: ['800px', '550px'],
+                content: $("#viewNewsDiv"),
+                area: ['700px', '540px'],
                 success: function (index) {
-                    $("#view_title").html(news.title);
-                    $("#view_opername").html(news.opername);
-                    $("#view_createtime").html(news.createtime);
-                    $("#view_content").html(news.content);
+                    $("#view_title").html(data.storeNotificationNumber);
+                    // $("#view_opername").html(data.opername);
+                    $("#view_createtime").html(data.notificationTime);
+                    $("#view_content").html(data.storeInformation);
                 }
             });
+        }
+
+        //打开添加页面
+        function openAddCar() {
+            mainIndex = layer.open({
+                type: 1,
+                title: '添加车辆',
+                content: $("#saveOrUpdateDiv"),
+                area: ['700px', '480px'],
+                success: function (index) {
+                    //清空表单数据
+                    $("#dataFrm")[0].reset();
+                    //设置默认图片
+                    $("#showCarImg").attr("src", "/HangCaiCarRental/file/downloadShowFile?path=images/defaultcarimage.jpg");
+                    $("#carimg").val("images/defaultcarimage.jpg");
+                    url = "/HangCaiCarRental/car/addCar";
+                    $("#carnumber").removeAttr("readonly", "readonly");
+                }
+            });
+        }
+
+        //打开修改页面
+        function openUpdateCar(data) {
+            mainIndex = layer.open({
+                type: 1,
+                title: '修改车辆',
+                content: $("#saveOrUpdateDiv"),
+                area: ['700px', '480px'],
+                success: function (index) {
+                    form.val("dataFrm", data);
+                    $("#showCarImg").attr("src", "/HangCaiCarRental/file/downloadShowFile?path=" + data.carimg);
+                    url = "/HangCaiCarRental/car/updateCar";
+                    $("#carnumber").attr("readonly", "readonly");
+                }
+            });
+        }
+
+        //保存
+        form.on("submit(doSubmit)", function (obj) {
+            //序列化表单数据
+            var params = $("#dataFrm").serialize();
+            $.post(url, params, function (obj) {
+                layer.msg(obj.msg);
+                //关闭弹出层
+                layer.close(mainIndex)
+                //刷新数据 表格
+                tableIns.reload();
+            })
         });
-    }
 
-    <%--function viewNews() {--%>
-    <%--    $.get("/HangCaiCarRental/mongo/find", function (news) {--%>
-    <%--        layer.open({--%>
-    <%--            type: 1,--%>
-    <%--            title: '查看公告',--%>
-    <%--            content: $("#desk_viewNewsDiv"),--%>
-    <%--            area: ['800px', '550px'],--%>
-    <%--            success: function () {--%>
-    <%--                alert("成功")--%>
-    <%--                $("#view_title").html(news.title);--%>
-    <%--                $("#view_opername").html(news.opername);--%>
-    <%--                $("#view_createtime").html(news.createtime);--%>
-    <%--                $("#view_content").html(news.content);--%>
-    <%--            }--%>
-    <%--        });--%>
-    <%--    });--%>
-    <%--}--%>
+        //批量删除
+        function deleteBatch() {
+            //得到选中的数据行
+            var checkStatus = table.checkStatus('carTable');
+            var data = checkStatus.data;
+            var params = "";
+            $.each(data, function (i, item) {
+                if (i == 0) {
+                    params += "ids=" + item.storeNotificationId;
+                } else {
+                    params += "&ids=" + item.storeNotificationId;
+                }
+            });
+            layer.confirm('真的要删除这些车辆么？', function (index) {
+                //向服务端发送删除指令
+                $.post("/HangCaiCarRental/car/deleteBatchCar", params, function (res) {
+                    layer.msg(res.msg);
+                    //刷新数据表格
+                    tableIns.reload();
+                })
+            });
+        }
 
-    <%--$("#b_1").click(function () {--%>
-    <%--    alert("运行ajax")--%>
-    <%--    $.ajax({--%>
-    <%--        url: "/HangCaiCarRental/mongo/find",--%>
-    <%--        type: "GET",--%>
-    <%--        success: function (name) {--%>
-    <%--            $("#div_1").text(name);--%>
-    <%--        }--%>
-    <%--    });--%>
-    <%--});--%>
+        //上传缩略图
+        upload.render({
+            elem: '#carimgDiv',
+            url: '/HangCaiCarRental/file/uploadFile',
+            method: "post",  //此处是为了演示之用，实际使用中请将此删除，默认用post方式提交
+            acceptMime: 'images/*',
+            field: "mf",
+            done: function (res, index, upload) {
+                $('#showCarImg').attr('src', "/HangCaiCarRental/file/downloadShowFile?path=" + res.data.src);
+                $('#carimg').val(res.data.src);
+                $('#carimgDiv').css("background", "#fff");
+            }
+        });
+
+        //查看大图
+        function showCarImage(data) {
+            mainIndex = layer.open({
+                type: 1,
+                title: "【" + data.carNumber + '】的车辆图片',
+                content: $("#viewCarImageDiv"),
+                area: ['750px', '500px'],
+                success: function (index) {
+                    $("#view_carimg").attr("src", "/HangCaiCarRental/file/downloadShowFile?path=" + data.carimg);
+                }
+            });
+        }
+
+    });
+
 </script>
+
 </body>
 </html>
