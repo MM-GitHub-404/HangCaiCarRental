@@ -106,40 +106,64 @@
             <div class="layui-inline">
                 <label class="layui-form-label">客户姓名:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="custname" lay-verify="required" placeholder="请输入客户姓名" autocomplete="off"
+                    <input type="text" name="customerName" lay-verify="required" placeholder="请输入客户姓名" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">身份证号:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="identity" lay-verify="required" placeholder="请输入客户姓名" autocomplete="off"
+                    <input type="text" name="customerIdNumber" lay-verify="required" placeholder="请输入客户姓名" autocomplete="off"
                            class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">电话号码:</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="customerPhoneNumber" placeholder="请输入电话号码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">邮箱号:</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="customerEmailNumber" placeholder="请输入邮箱号" autocomplete="off" class="layui-input">
                 </div>
             </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">客户地址:</label>
+                <label class="layui-form-label">常住省份:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="address" placeholder="请输入客户地址" autocomplete="off" class="layui-input">
+                    <input type="text" name="customerResidentProvince" placeholder="请输入常住省份" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">常住城市:</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="customerResidentCity" placeholder="请输入常住城市" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">常住区域:</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="customerResidentArea" placeholder="请输入常住区域" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">常住地址:</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="customerDetailedAddress" placeholder="请输入常住地址" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">客户职业:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="career" placeholder="请输入客户职业" autocomplete="off" class="layui-input">
+                    <input type="text" name="customerOccupation" placeholder="请输入客户职业" autocomplete="off" class="layui-input">
                 </div>
             </div>
+
         </div>
         <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">客户电话:</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="phone" lay-verify="required|phone" placeholder="请输入客户电话" autocomplete="off"
-                           class="layui-input">
-                </div>
-            </div>
             <div class="layui-inline">
                 <label class="layui-form-label">客户性别:</label>
                 <div class="layui-input-inline">
@@ -196,7 +220,7 @@
                 , {field: 'customerDetailedAddress', title: '常住地址', align: 'center', width: '170'}
                 , {field: 'customerIntegral', title: '积分', align: 'center', width: '90'}
                 , {field: 'customerDateBirth', title: '出生日期', align: 'center', width: '110'}
-                // , {fixed: 'right', title: '操作', toolbar: '#customerBar', align: 'center', width: '150'}
+                , {fixed: 'right', title: '操作', toolbar: '#customerBar', align: 'center', width: '150'}
             ]],
             done:function (data, curr, count) {
                 //不是第一页时，如果当前返回的数据为0那么就返回上一页
@@ -244,7 +268,7 @@
             if (layEvent === 'del') { //删除
                 layer.confirm('真的删除【' + data.custname + '】这个客户么？', function (index) {
                     //向服务端发送删除指令
-                    $.post("/HangCaiCarRental/customer/deleteCustomer", {identity: data.identity}, function (res) {
+                    $.post("/HangCaiCarRental/customer/deleteCustomer", {customerId: data.customerId}, function (res) {
                         layer.msg(res.msg);
                         //刷新数据表格
                         tableIns.reload();
@@ -310,9 +334,9 @@
             var params = "";
             $.each(data, function (i, item) {
                 if (i == 0) {
-                    params += "ids=" + item.identity;
+                    params += "ids=" + item.customerId;
                 } else {
-                    params += "&ids=" + item.identity;
+                    params += "&ids=" + item.customerId;
                 }
             });
             layer.confirm('真的要删除这些客户么？', function (index) {
