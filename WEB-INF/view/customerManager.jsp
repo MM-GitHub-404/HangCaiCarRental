@@ -29,21 +29,21 @@
         <div class="layui-inline">
             <label class="layui-form-label">客户姓名:</label>
             <div class="layui-input-inline" style="padding: 5px">
-                <input type="text" name="custname" autocomplete="off" class="layui-input layui-input-inline"
+                <input type="text" name="customerName" autocomplete="off" class="layui-input layui-input-inline"
                        placeholder="请输入客户名称" style="height: 30px;border-radius: 10px">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">身份证号:</label>
             <div class="layui-input-inline" style="padding: 5px">
-                <input type="text" name="identity" autocomplete="off" class="layui-input layui-input-inline"
+                <input type="text" name="customerIdNumber" autocomplete="off" class="layui-input layui-input-inline"
                        placeholder="请输入身份证号" style="height: 30px;border-radius: 10px">
             </div>
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label">客户地址:</label>
+            <label class="layui-form-label">常住城市:</label>
             <div class="layui-input-inline" style="padding: 5px">
-                <input type="text" name="address" autocomplete="off" class="layui-input layui-input-inline"
+                <input type="text" name="customerResidentCity" autocomplete="off" class="layui-input layui-input-inline"
                        placeholder="请输入客户地址" style="height: 30px;border-radius: 10px">
             </div>
         </div>
@@ -52,22 +52,22 @@
         <div class="layui-inline">
             <label class="layui-form-label">客户电话:</label>
             <div class="layui-input-inline" style="padding: 5px">
-                <input type="text" name="phone" autocomplete="off" class="layui-input layui-input-inline"
+                <input type="text" name="customerPhoneNumber" autocomplete="off" class="layui-input layui-input-inline"
                        placeholder="请输入客户电话" style="height: 30px;border-radius: 10px">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">客户职业:</label>
             <div class="layui-input-inline" style="padding: 5px">
-                <input type="text" name="career" autocomplete="off" class="layui-input layui-input-inline"
+                <input type="text" name="customerOccupation" autocomplete="off" class="layui-input layui-input-inline"
                        placeholder="请输入客户职业" style="height: 30px;border-radius: 10px">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">性别:</label>
             <div class="layui-input-inline">
-                <input type="radio" name="sex" value="1" title="男">
-                <input type="radio" name="sex" value="0" title="女">
+                <input type="radio" name="customerGender" value="男" title="男">
+                <input type="radio" name="customerGender" value="女" title="女">
             </div>
             <button type="button"
                     class="layui-btn layui-btn-normal layui-icon layui-icon-search layui-btn-radius layui-btn-sm"
@@ -77,10 +77,10 @@
                     class="layui-btn layui-btn-warm layui-icon layui-icon-refresh layui-btn-radius layui-btn-sm"
                     style="margin-top: 4px">重置
             </button>
-            <button type="button"
-                    class="layui-btn layui-btn-green layui-icon layui-icon-download-circle layui-btn-radius layui-btn-sm"
-                    id="doExport" style="margin-top: 4px">导出
-            </button>
+<%--            <button type="button"--%>
+<%--                    class="layui-btn layui-btn-green layui-icon layui-icon-download-circle layui-btn-radius layui-btn-sm"--%>
+<%--                    id="doExport" style="margin-top: 4px">导出--%>
+<%--            </button>--%>
         </div>
     </div>
 
@@ -214,7 +214,7 @@
         $("#doSearch").click(function () {
             var params = $("#searchFrm").serialize();
             tableIns.reload({
-                url: "/HangCaiCarRental/customer/loadAllCustomer?" + params,
+                url: "/HangCaiCarRental/customer/conditionLoadAllCustomer?" + params,
                 page: {curr: 1}
             })
         });
