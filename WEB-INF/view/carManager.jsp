@@ -27,22 +27,36 @@
         <div class="layui-inline">
             <label class="layui-form-label">车牌号:</label>
             <div class="layui-input-inline" style="padding: 5px">
-                <input type="text" name="carnumber" autocomplete="off" class="layui-input layui-input-inline"
+                <input type="text" name="carNumber" autocomplete="off" class="layui-input layui-input-inline"
                        placeholder="请输入车牌号" style="height: 30px;border-radius: 10px">
             </div>
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label">车辆类型:</label>
+            <label class="layui-form-label">最低价格:</label>
             <div class="layui-input-inline" style="padding: 5px">
-                <input type="text" name="cartype" autocomplete="off" class="layui-input layui-input-inline"
-                       placeholder="请输入车辆类型" style="height: 30px;border-radius: 10px">
+                <input type="text" name="lowestDailyRent" autocomplete="off" class="layui-input layui-input-inline"
+                       placeholder="请输入最低价格" style="height: 30px;border-radius: 10px">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">最高价格:</label>
+            <div class="layui-input-inline" style="padding: 5px">
+                <input type="text" name="highestDailyRent" autocomplete="off" class="layui-input layui-input-inline"
+                       placeholder="请输入最高价格" style="height: 30px;border-radius: 10px">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">车辆颜色:</label>
             <div class="layui-input-inline" style="padding: 5px">
-                <input type="text" name="color" autocomplete="off" class="layui-input layui-input-inline"
+                <input type="text" name="carColor" autocomplete="off" class="layui-input layui-input-inline"
                        placeholder="请输入车辆颜色" style="height: 30px;border-radius: 10px">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">车辆名称:</label>
+            <div class="layui-input-inline" style="padding: 5px">
+                <input type="text" name="carName" autocomplete="off" class="layui-input layui-input-inline"
+                       placeholder="请输入车辆名称" style="height: 30px;border-radius: 10px">
             </div>
         </div>
     </div>
@@ -50,15 +64,17 @@
         <div class="layui-inline">
             <label class="layui-form-label">车辆描述:</label>
             <div class="layui-input-inline" style="padding: 5px">
-                <input type="text" name="description" autocomplete="off" class="layui-input layui-input-inline"
+                <input type="text" name="carDescribe" autocomplete="off" class="layui-input layui-input-inline"
                        placeholder="请输入车辆描述" style="height: 30px;border-radius: 10px">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">是否出租:</label>
             <div class="layui-input-inline">
-                <input type="radio" name="isrenting" value="1" title="已出租">
-                <input type="radio" name="isrenting" value="0" title="未出租">
+                <input type="radio" name="carStatus" value="已入库" title="已出租">
+                <input type="radio" name="carStatus" value="已归还" title="已归还">
+                <input type="radio" name="carStatus" value="未归还" title="未归还">
+                <input type="radio" name="carStatus" value="已出售" title="已出售">
             </div>
             <button type="button"
                     class="layui-btn layui-btn-normal layui-icon layui-icon-search layui-btn-radius layui-btn-sm"
@@ -68,32 +84,10 @@
                     class="layui-btn layui-btn-warm layui-icon layui-icon-refresh layui-btn-radius layui-btn-sm"
                     style="margin-top: 4px">重置
             </button>
-            <button type="button"
-                    class="layui-btn layui-btn-green layui-icon layui-icon-download-circle layui-btn-radius layui-btn-sm"
-                    id="doExport" style="margin-top: 4px">导出
-            </button>
-        </div>
-    </div>
-</form>
-<%-- es模糊查询 --%>
-<form class="layui-form" method="post" id="esSearchFrm">
-    <div class="layui-form-item">
-        <%--        <div class="layui-inline">--%>
-        <%--            <label class="layui-form-label">es模糊查询:</label>--%>
-        <%--            <div class="layui-input-inline" style="padding: 5px">--%>
-        <%--                <input type="text" name="carnumber" autocomplete="off" class="layui-input layui-input-inline"--%>
-        <%--                       style="height: 30px;border-radius: 10px">--%>
-        <%--            </div>--%>
-        <%--        </div>--%>
-        <div class="layui-inline">
-            <button type="button"
-                    class="layui-btn layui-btn-normal layui-icon layui-icon-search layui-btn-radius layui-btn-sm"
-                    id="doEsSearch" style="margin-top: 4px">查询
-            </button>
-            <button type="reset"
-                    class="layui-btn layui-btn-warm layui-icon layui-icon-refresh layui-btn-radius layui-btn-sm"
-                    style="margin-top: 4px">重置
-            </button>
+<%--            <button type="button"--%>
+<%--                    class="layui-btn layui-btn-green layui-icon layui-icon-download-circle layui-btn-radius layui-btn-sm"--%>
+<%--                    id="doExport" style="margin-top: 4px">导出--%>
+<%--            </button>--%>
         </div>
     </div>
 </form>
@@ -122,22 +116,31 @@
                     <div class="layui-form-item magt3">
                         <label class="layui-form-label">车牌号:</label>
                         <div class="layui-input-block" style="padding: 5px">
-                            <input type="text" name="carnumber" id="carnumber" autocomplete="off" class="layui-input"
+                            <input type="text" name="carNumber" id="carnumber" autocomplete="off" class="layui-input"
                                    lay-verify="required"
                                    placeholder="请输入车牌号" style="height: 30px;border-radius: 10px">
                         </div>
                     </div>
+                    <div class="layui-form-item magt3">
+                        <label class="layui-form-label">车型名称:</label>
+                        <div class="layui-input-block" style="padding: 5px">
+                            <input type="text" name="carName" id="carnumber" autocomplete="off" class="layui-input"
+                                   lay-verify="required"
+                                   placeholder="请输入车牌号" style="height: 30px;border-radius: 10px">
+                        </div>
+                    </div>
+                    </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">车辆类型:</label>
                         <div class="layui-input-block" style="padding: 5px">
-                            <input type="text" name="cartype" autocomplete="off" class="layui-input"
+                            <input type="text" name="carType" autocomplete="off" class="layui-input"
                                    placeholder="请输入车辆类型" style="height: 30px;border-radius: 10px">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">车辆颜色:</label>
                         <div class="layui-input-block" style="padding: 5px">
-                            <input type="text" name="color" autocomplete="off" class="layui-input"
+                            <input type="text" name="carColor" autocomplete="off" class="layui-input"
                                    placeholder="请输入车辆颜色" style="height: 30px;border-radius: 10px">
                         </div>
                     </div>
@@ -147,46 +150,63 @@
                         <%--显示要上传的图片--%>
                         <img class="layui-upload-img thumbImg" id="showCarImg">
                         <%--保存当前显示图片的地址--%>
-                        <input type="hidden" name="carimg" id="carimg">
+                        <input type="hidden" name="carThumbnail" id="carimg">
                     </div>
                 </div>
             </div>
             <div class="layui-form-item magb0">
                 <label class="layui-form-label">车辆描述:</label>
                 <div class="layui-input-block" style="padding: 5px">
-                    <input type="text" name="description" autocomplete="off" class="layui-input"
+                    <input type="text" name="carDescribe" autocomplete="off" class="layui-input"
                            placeholder="请输入车辆描述" style="height: 30px;border-radius: 10px">
                 </div>
             </div>
             <div class="layui-form-item magb0">
                 <div class="layui-inline">
-                    <label class="layui-form-label">车辆价格:</label>
+                    <label class="layui-form-label">日租金:</label>
                     <div class="layui-input-block" style="padding: 5px">
-                        <input type="text" name="price" class="layui-input" lay-verify="required|number"
+                        <input type="text" name="dailyRent" class="layui-input" lay-verify="required|number"
                                placeholder="请输入车辆价格" style="height: 30px;border-radius: 10px">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">出租价格:</label>
+                    <label class="layui-form-label">押金:</label>
                     <div class="layui-input-block" style="padding: 5px">
-                        <input type="text" name="rentprice" class="layui-input" lay-verify="required|number"
+                        <input type="text" name="cashPledge" class="layui-input" lay-verify="required|number"
                                placeholder="请输入车辆出租价格" style="height: 30px;border-radius: 10px">
                     </div>
                 </div>
             </div>
             <div class="layui-form-item magb0">
                 <div class="layui-inline">
-                    <label class="layui-form-label">出租押金:</label>
+                    <label class="layui-form-label">车辆价格:</label>
                     <div class="layui-input-block" style="padding: 5px">
-                        <input type="text" name="deposit" class="layui-input" lay-verify="required|number"
+                        <input type="text" name="carPrice" class="layui-input" lay-verify="required|number"
                                placeholder="请输入车辆出租押金" style="height: 30px;border-radius: 10px">
+                    </div>
+
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">钥匙门店:</label>
+                    <div class="layui-input-block" style="padding: 5px">
+                        <input type="text" name="keyOwnershipStore" class="layui-input" lay-verify="required|number"
+                               placeholder="请输入钥匙门店" style="height: 30px;border-radius: 10px">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">是否出租:</label>
+                    <label class="layui-form-label">停放地点:</label>
+                    <div class="layui-input-block" style="padding: 5px">
+                        <input type="text" name="parkingLocation" class="layui-input" lay-verify="required|number"
+                               placeholder="请输入钥匙门店" style="height: 30px;border-radius: 10px">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">车辆状态:</label>
                     <div class="layui-input-inline">
-                        <input type="radio" name="isrenting" value="1" title="已出租">
-                        <input type="radio" name="isrenting" value="0" checked="checked" title="未出租">
+                        <input type="radio" name="carStatus" value="已入库" title="已入库">
+                        <input type="radio" name="carStatus" value="已出售" checked="checked" title="已出售">
+                        <input type="radio" name="carStatus" value="已归还" checked="checked" title="已归还">
+                        <input type="radio" name="carStatus" value="未归还" checked="checked" title="未归还">
                     </div>
                 </div>
             </div>
@@ -231,13 +251,13 @@
             , cellMinWidth: 50 //设置列的最小默认宽度
             , page: true  //是否启用分页
             , cols: [[   //列表数据
-                {type: 'checkbox    ', fixed: 'left'}
+                {type: 'checkbox', fixed: 'left'}
+                , {field: 'carNumber', title: '车牌号', align: 'center', width: '110'}
                 , {
                     field: 'carThumbnail', title: '缩略图', align: 'center', width: '80', templet: function (d) {
                         return "<img width=50 height=30 src=/HangCaiCarRental/file/downloadShowFile?path=" + d.carimg + "/>";
                     }
                 }
-                , {field: 'carNumber', title: '车牌号', align: 'center', width: '110'}
                 , {field: 'carName', title: '车辆名称', align: 'center', width: '90'}
                 , {field: 'carColor', title: '车辆颜色', align: 'center', width: '90'}
                 , {field: 'carDescribe', title: '车辆详情', align: 'center', width: '90'}
@@ -258,7 +278,7 @@
                     }
                 }
 
-                // , {fixed: 'right', title: '操作', toolbar: '#carBar', align: 'center', width: '190'}
+                , {fixed: 'right', title: '操作', toolbar: '#carBar', align: 'center', width: '190'}
             ]],
             done: function (data, curr, count) {
                 //不是第一页时，如果当前返回的数据为0那么就返回上一页
@@ -277,7 +297,7 @@
             var params = $("#searchFrm").serialize();
 //            alert(params);
             tableIns.reload({
-                url: "/HangCaiCarRental/car/loadAllCar?" + params,
+                url: "/HangCaiCarRental/car/loadConditionAllCar?" + params,
                 page: {curr: 1}
             })
         });
@@ -311,9 +331,9 @@
             var data = obj.data; //获得当前行    数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             if (layEvent === 'del') { //删除
-                layer.confirm('真的删除 ' + data.carnumber + ' 这个车辆么？', function (index) {
+                layer.confirm('真的删除 ' + data.carNumber + ' 这个车辆么？', function (index) {
                     //向服务端发送删除指令
-                    $.post("/HangCaiCarRental/car/deleteCar", {carnumber: data.carnumber}, function (res) {
+                    $.post("/HangCaiCarRental/car/deleteCar", {carId: data.carId}, function (res) {
                         layer.msg(res.msg);
                         //刷新数据表格
                         tableIns.reload();
@@ -386,9 +406,9 @@
             var params = "";
             $.each(data, function (i, item) {
                 if (i == 0) {
-                    params += "ids=" + item.carnumber;
+                    params += "ids=" + item.carId;
                 } else {
-                    params += "&ids=" + item.carnumber;
+                    params += "&ids=" + item.carId;
                 }
             });
             layer.confirm('真的要删除这些车辆么？', function (index) {
@@ -419,7 +439,7 @@
         function showCarImage(data) {
             mainIndex = layer.open({
                 type: 1,
-                title: "【" + data.carnumber + '】的车辆图片',
+                title: "【" + data.carNumber + '】的车辆图片',
                 content: $("#viewCarImageDiv"),
                 area: ['750px', '500px'],
                 success: function (index) {
