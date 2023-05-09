@@ -266,7 +266,7 @@
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             if (layEvent === 'del') { //删除
-                layer.confirm('真的删除【' + data.custname + '】这个客户么？', function (index) {
+                layer.confirm('真的删除【' + data.customerName + '】这个客户么？', function (index) {
                     //向服务端发送删除指令
                     $.post("/HangCaiCarRental/customer/deleteCustomer", {customerId: data.customerId}, function (res) {
                         layer.msg(res.msg);
