@@ -1807,6 +1807,18 @@ a cite {
     padding: 0 5px !important
 }
 
+/* 门店通知按钮位置 */
+#doSearch{
+    position: fixed;
+    right: 250px;
+    /* right: 20%; */
+}
+#doneSearch {
+    position: fixed;
+    right: 100px;
+    /* right: 10%; */
+}
+
 .layui-btn {
     display: inline-block;
     height: 38px;
@@ -1979,10 +1991,11 @@ a cite {
 .layui-input, .layui-select, .layui-textarea {
     width: 320px;
     height: 40px;
-    margin-top: 30px;
+    /* margin-top: 30px; */
+    margin-top: 0px;
     line-height: 1.3;
     line-height: 38px \9;
-    margin-bottom: 30px;
+    margin-bottom: 0px;
     border-width: 1px;
     border-style: solid;
     background-color: #fff;
@@ -2215,7 +2228,8 @@ a cite {
 .layui-form-item .layui-input-inline {
     float: left;
     width: 190px;
-    margin-right: 10px
+    /* margin-right: 10px; */
+    margin-right: -25px
 }
 
 .layui-form-text .layui-input-inline {
