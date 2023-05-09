@@ -76,9 +76,11 @@
     <div class="layui-form-item">
         <button class="layui-btn layui-block" lay-filter="login" lay-submit>登录</button>
     </div>
+
     <div class="layui-form-item layui-row" style="text-align: center;color: red;">
         ${error}
     </div>
+    
     <div class="layui-more-tips-warp">
         <span class="layui-more-tips-warp-left"></span>
         <span class="layui-login-wal1">其他登陆方式</span>
