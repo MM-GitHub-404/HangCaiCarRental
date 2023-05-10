@@ -1808,8 +1808,20 @@ a cite {
 }
 
 /* 门店通知按钮位置 */
-#doSearch{
+#doSearch-car{
     position: fixed;
+    left: 600px;
+    /* right: 250px; */
+    /* right: 20%; */
+}
+#doSearch-customer {
+    position: fixed;
+    left: 900px;
+
+}
+#doSearch {
+    position: fixed;
+    /* left: 600px; */
     right: 250px;
     /* right: 20%; */
 }
@@ -1818,6 +1830,28 @@ a cite {
     right: 100px;
     /* right: 10%; */
 }
+#doneSearch-customer {
+    position: fixed;
+    left: 950px;
+
+}
+#reSet{
+    position: fixed;
+    left: 650px;
+}
+/* #doExport{
+    position: fixed;
+    left: 710px;
+}
+#doEsSearch{
+    position: fixed;
+    left: 550px;
+}
+#EsreSet{
+    position: fixed;
+    left: 600px;
+} */
+
 
 .layui-btn {
     display: inline-block;
@@ -2175,7 +2209,7 @@ a cite {
 }
 
 .layui-form-item {
-    margin-bottom: 14px;
+    /* margin-bottom: 14px; */
     clear: both;
     *zoom: 1
 }
