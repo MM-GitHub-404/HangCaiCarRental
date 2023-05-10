@@ -17,7 +17,7 @@ To change this template use File | Settings | File Templates.
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    <link rel="icon" href="../../resources/favicon.ico">
+    <link rel="icon" href="/HangCaiCarRental/resources/favicon.ico">
     <link rel="stylesheet" href="/HangCaiCarRental/resources/layui/css/layui.css" media="all"/>
     <link rel="stylesheet" href="/HangCaiCarRental/resources/css/public.css" media="all"/>
     <link rel="stylesheet" href="/HangCaiCarRental/resources/layui_ext/dtree/dtree.css">

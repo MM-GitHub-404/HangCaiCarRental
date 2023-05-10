@@ -169,15 +169,15 @@
         //渲染数据表格
         tableIns = table.render({
             elem: '#menuTable'   //渲染的目标对象
-            , url: '/HangCaiCarRental/menu/loadAllMenu' //数据接口
+            , url: '/HangCaiCarRental/menu/loadConditionMenu' //数据接口
             , title: '用户数据表'//数据导出来的标题
             , toolbar: "#menuToolBar"   //表格的工具条
             , height: 'full-150'
             , cellMinWidth: 100 //设置列的最小默认宽度
             , page: true  //是否启用分页
             , cols: [[   //列表数据
-                {type: 'checkbox', fixed: 'left'}
-                , {field: 'id', title: 'ID', align: 'center', width: '80'}
+                // {type: 'checkbox', fixed: 'left'}
+                {field: 'id', title: 'ID', align: 'center', width: '80'}
                 , {field: 'pid', title: '父节点ID', align: 'center', width: '100'}
                 , {field: 'title', title: '菜单名称', align: 'center', width: '120'}
                 , {field: 'href', title: '菜单地址', align: 'center', width: '220'}
@@ -204,7 +204,7 @@
         $("#doSearch").click(function () {
             var params = $("#searchFrm").serialize();
             tableIns.reload({
-                url: "/HangCaiCarRental/menu/loadAllMenu?" + params
+                url: "/HangCaiCarRental/menu/loadConditionMenu?" + params
             })
         });
 
@@ -330,7 +330,7 @@
 
     function reloadTable(id) {
         tableIns.reload({
-            url: "/HangCaiCarRental/menu/loadAllMenu?id=" + id
+            url: "/HangCaiCarRental/menu/loadConditionMenu?id=" + id
         })
     }
 </script>

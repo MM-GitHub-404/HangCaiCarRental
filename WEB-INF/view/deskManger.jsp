@@ -23,7 +23,7 @@
         </button>
         <button type="button"
                 class="layui-btn layui-btn-warm layui-icon layui-icon-refresh layui-btn-radius layui-btn-sm"
-                style="margin-top: 4px">查询门店已处理通知
+                id="doSearch2" style="margin-top: 4px">查询门店已处理通知
         </button>
     </div>
 </form>
@@ -74,7 +74,7 @@
         var second = dateObj.getSeconds(); //当前系统时间的秒钟值
         var timeValue = "" + ((hour >= 12) ? (hour >= 18) ? "晚上" : "下午" : "上午"); //当前时间属于上午、晚上还是下午
         newDate = dateFilter(year) + "年" + dateFilter(month) + "月" + dateFilter(date) + "日 " + " " + dateFilter(hour) + ":" + dateFilter(minute) + ":" + dateFilter(second);
-        document.getElementById("nowTime").innerHTML = "亲爱的${user}，" + timeValue + "好！ 欢迎使用航财汽车租赁管理系统。当前时间为： " + newDate + "　" + week;
+        document.getElementById("nowTime").innerHTML = timeValue + "好！ 欢迎使用航财汽车租赁管理系统。当前时间为： " + newDate + "　" + week;
         setTimeout("getLangDate()", 1000);
     }
 
@@ -117,9 +117,9 @@
             , page: true  //是否启用分页
             , cols: [[   //列表数据
                 // {type: 'checkbox', fixed: 'left'}
-                , {field: 'storeNotificationNumber', title: '通知单号', align: 'center', width: '110'}
-                , {field: 'notificationTime', title: '通知时间', align: 'center', width: '90'}
-                , {field: 'storeInformation', title: '信息', align: 'center', width: '90'}
+                {field: 'storeNotificationNumber', title: '通知单号', align: 'center', width: '250'}
+                , {field: 'notificationTime', title: '通知时间', align: 'center', width: '200'}
+                , {field: 'storeInformation', title: '信息', align: 'center', width: '500'}
                 , {
                     field: 'resolveSituation', title: '解决情况', align: 'center', width: '90', templet: function (d) {
                         if (d.resolveSituation == '未解决') {
@@ -131,7 +131,7 @@
                     }
                 }
 
-                , {fixed: 'right', title: '操作', toolbar: '#carBar', align: 'center', width: '190'}
+                , {fixed: 'right', title: '操作', toolbar: '#carBar', align: 'center', width: '150'}
             ]],
             done: function (data, curr, count) {
                 //不是第一页时，如果当前返回的数据为0那么就返回上一页
@@ -147,10 +147,19 @@
 
         //模糊查询
         $("#doSearch").click(function () {
-            var params = $("#searchFrm").serialize();
+            // var params = $("#searchFrm").serialize();
 //            alert(params);
             tableIns.reload({
-                url: "/HangCaiCarRental/car/loadConditionAllCar?" + params,
+                url: "/HangCaiCarRental/storeNotification/notProcessedStoreNotification",
+                page: {curr: 1}
+            })
+        });
+        //模糊查询
+        $("#doSearch2").click(function () {
+            // var params = $("#searchFrm").serialize();
+//            alert(params);
+            tableIns.reload({
+                url: "/HangCaiCarRental/storeNotification/processedStoreNotification",
                 page: {curr: 1}
             })
         });
