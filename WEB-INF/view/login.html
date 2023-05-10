@@ -8,9 +8,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    <link rel="icon" href="../../resources/favicon.ico">
-    <link rel="stylesheet" href="../../resources/layui/css/layui.css" media="all"/>
-    <link rel="stylesheet" href="../../resources/css/public.css" media="all"/>
+    <link rel="icon" href="/HangCaiCarRental/resources/favicon.ico">
+    <link rel="stylesheet" href="/HangCaiCarRental/resources/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="/HangCaiCarRental/resources/css/public.css" media="all"/>
 </head>
 <body class="loginBody">
 
@@ -76,8 +76,8 @@
     </div>
 
     <div class="layui-form-item layui-row" style="text-align: center;color: red;">
-        ${error}
     </div>
+
     <div class="layui-more-tips-warp">
         <span class="layui-more-tips-warp-left"></span>
         <span class="layui-login-wal1">其他登陆方式</span>
@@ -93,14 +93,18 @@
             }
         </style>
         <!-- 现在使用<a>标签进行页面跳转 -->
-        <a href="/HangCaiCarRental/navigation/toEmailLogin" class="layui-toggle-btn1">邮箱登录</a>
+        <a href="/WEB-INF/view/emailLogin.html" class="layui-toggle-btn1">邮箱登录</a>
+    </div>
+
+    <div class="layui-err-msg" style="color: red;">
+        <span class="err-msg">验证码错误！</span>
     </div>
 
     <div class="layui-form-item layui-row" style="text-align: center;color: red;">
     </div>
 </form>
-<script type="text/javascript" src="/HangCaiCarRental/resources/layui/layui.js"></script>
-<script type="text/javascript" src="/HangCaiCarRental/resources/js/cache.js"></script>
+<script type="text/javascript" src="/resources/layui/layui.js"></script>
+<script type="text/javascript" src="/resources/js/cache.js"></script>
 <script type="text/javascript">
     layui.use(['form', 'layer', 'jquery'], function () {
         var form = layui.form,
