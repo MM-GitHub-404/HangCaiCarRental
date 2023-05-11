@@ -1,3 +1,4 @@
+<!-- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %> -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
@@ -29,21 +30,21 @@
             <label class="layui-form-label">客户姓名:</label>
             <div class="layui-input-inline" style="padding: 5px">
                 <input type="text" name="customerName" autocomplete="off" class="layui-input layui-input-inline"
-                    id="input-inline"   placeholder="请输入客户名称" style="height: 30px;border-radius: 10px">
+                       id="customer-input" placeholder="请输入客户名称" style="height: 30px;border-radius: 10px">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">身份证号:</label>
             <div class="layui-input-inline" style="padding: 5px">
                 <input type="text" name="customerIdNumber" autocomplete="off" class="layui-input layui-input-inline"
-                    id="input-inline"   placeholder="请输入身份证号" style="height: 30px;border-radius: 10px">
+                       id="customer-input" placeholder="请输入身份证号" style="height: 30px;border-radius: 10px">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">常住城市:</label>
             <div class="layui-input-inline" style="padding: 5px">
                 <input type="text" name="customerResidentCity" autocomplete="off" class="layui-input layui-input-inline"
-                    id="input-inline"   placeholder="请输入客户地址" style="height: 30px;border-radius: 10px">
+                       id="customer-input" placeholder="请输入客户地址" style="height: 30px;border-radius: 10px">
             </div>
         </div>
     </div>
@@ -52,14 +53,14 @@
             <label class="layui-form-label">客户电话:</label>
             <div class="layui-input-inline" style="padding: 5px">
                 <input type="text" name="customerPhoneNumber" autocomplete="off" class="layui-input layui-input-inline"
-                    id="input-inline"   placeholder="请输入客户电话" style="height: 30px;border-radius: 10px">
+                       id="customer-input" placeholder="请输入客户电话" style="height: 30px;border-radius: 10px">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">客户职业:</label>
             <div class="layui-input-inline" style="padding: 5px">
                 <input type="text" name="customerOccupation" autocomplete="off" class="layui-input layui-input-inline"
-                    id="input-inline"   placeholder="请输入客户职业" style="height: 30px;border-radius: 10px">
+                       id="customer-input" placeholder="请输入客户职业" style="height: 30px;border-radius: 10px">
             </div>
         </div>
         <div class="layui-inline">
@@ -70,12 +71,11 @@
             </div>
             <button type="button"
                     class="layui-btn layui-btn-normal layui-icon layui-icon-search layui-btn-radius layui-btn-sm"
-                    id="doSearch-customer" style="margin-top: 4px">查询
+                     style="margin-top: 4px">查询
             </button>
-
             <button type="reset"
                     class="layui-btn layui-btn-warm layui-icon layui-icon-refresh layui-btn-radius layui-btn-sm"
-                    id="doneSearch-customer" style="margin-top: 4px">重置
+                    style="margin-top: 4px">重置
             </button>
 <!-- <%--            <button type="button"--%>
 <%--                    class="layui-btn layui-btn-green layui-icon layui-icon-download-circle layui-btn-radius layui-btn-sm"--%>
@@ -186,7 +186,7 @@
     </form>
 </div>
 
-<script src="/HangCaiCarRental/resources/layui/layui.js"></script>
+<script src="../../resources/layui/layui.js"></script>
 <script type="text/javascript">
     var tableIns;
     layui.use(['jquery', 'layer', 'form', 'table'], function () {
