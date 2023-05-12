@@ -1809,8 +1809,8 @@ a cite {
 
 /* 门店通知按钮位置 */
 #doSearch-car{
-    position: fixed;
-    left: 900px;
+    position: absolute;
+    left: 580px;
     /* right: 250px; */
     /* right: 20%; */
 }
@@ -1830,6 +1830,7 @@ a cite {
     position: fixed;
     right: 140px;
     /* right: 10%; */
+    z-index: 50;
 }
 #doneSearch-customer {
     position: fixed;
@@ -1837,8 +1838,8 @@ a cite {
 
 }
 #reSet{
-    position: fixed;
-    left: 950px;
+    position: absolute;
+    left: 630px;
 }
 /* #doExport{
     position: fixed;
